@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   View,
   Text,
@@ -34,7 +35,6 @@ export default class CCInput extends Component {
     onChange: PropTypes.func,
     onBecomeEmpty: PropTypes.func,
     onBecomeValid: PropTypes.func,
-    additionalInputProps: PropTypes.shape(TextInput.propTypes),
   };
 
   static defaultProps = {
@@ -49,11 +49,12 @@ export default class CCInput extends Component {
     onChange: () => {},
     onBecomeEmpty: () => {},
     onBecomeValid: () => {},
-    additionalInputProps: {},
   };
 
-  componentWillReceiveProps = newProps => {
-    const { status, value, onBecomeEmpty, onBecomeValid, field } = this.props;
+  componentWillReceiveProps = (newProps) => {
+    const {
+      status, value, onBecomeEmpty, onBecomeValid, field,
+    } = this.props;
     const { status: newStatus, value: newValue } = newProps;
 
     if (value !== "" && newValue === "") onBecomeEmpty(field);
@@ -66,17 +67,19 @@ export default class CCInput extends Component {
   _onChange = value => this.props.onChange(this.props.field, value);
 
   render() {
-    const { label, value, placeholder, status, keyboardType,
-            containerStyle, inputStyle, labelStyle,
-            validColor, invalidColor, placeholderColor,
-            additionalInputProps } = this.props;
+    const {
+      label, value, placeholder, status, keyboardType,
+      containerStyle, inputStyle, labelStyle,
+      validColor, invalidColor, placeholderColor,
+    } = this.props;
     return (
-      <TouchableOpacity onPress={this.focus}
+      <TouchableOpacity
+          onPress={this.focus}
           activeOpacity={0.99}>
         <View style={[containerStyle]}>
           { !!label && <Text style={[labelStyle]}>{label}</Text>}
-          <TextInput ref="input"
-              {...additionalInputProps}
+          <TextInput
+              ref="input"
               keyboardType={keyboardType}
               autoCapitalise="words"
               autoCorrect={false}
@@ -87,7 +90,7 @@ export default class CCInput extends Component {
                  (invalidColor && status === "invalid") ? { color: invalidColor } :
                  {}),
               ]}
-              underlineColorAndroid={"transparent"}
+              underlineColorAndroid="transparent"
               placeholderTextColor={placeholderColor}
               placeholder={placeholder}
               value={value}
