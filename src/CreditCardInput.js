@@ -7,6 +7,7 @@ import ReactNative, {
   StyleSheet,
   ScrollView,
   Dimensions,
+  ViewPropTypes,
 } from "react-native";
 
 import CreditCard from "./CardView";
